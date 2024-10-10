@@ -4,8 +4,10 @@ import { LatestPost } from "~/app/_components/post";
 import { getServerAuthSession } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 
-import React from 'react';
-import Board from './_components/Board';
+// import React from 'react';
+// import Board from './_components/Board';
+// import useClient from 'next/app';
+
 // import BoardForm from './_components/BoardForm';
 // import Square from './_components/Square';
 
@@ -14,10 +16,4 @@ export default async function Home() {
   const session = await getServerAuthSession();
 
   void api.post.getLatest.prefetch();
-
-  return (
-    <div className="App min-h-screen">
-      <Board />
-    </div>
-  );
 }

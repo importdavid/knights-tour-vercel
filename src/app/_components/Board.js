@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Square from './Square';
 import BoardForm from './BoardForm';
 
+
 const Board = () => {
   const [rows, setRows] = useState(8); // Initial state for rows
   const [cols, setCols] = useState(8); // Initial state for columns
