@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+  --background: #36494E;
+  --visited: #FCD7AD;
+  --isLegal: #76F7BF;
+  --square: #90BEDE;
+  --textcolor: white;
+}
+
+.app {
+  background-color: var(--background);
+  color: var(--textcolor);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  display: grid;
+  align-content: start;
+  grid-gap: 2px;
+}
+
+.grid-square {
+  aspect-ratio: 1/1;
+  border-radius: 2px;
+  background-color: var(--square);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square {
+  height: 100%;
+  width: 100%;
+  border-radius: 2px;
+  background-color: var(--square);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  container-type: size;
+  transition: background-color 0.1s ease; /* Transition effect */
+}
+
+.isVisited {
+  background-color: var(--visited);
+}
+
+.isLegal {
+  background-color: var(--isLegal);
+}
+
+.knight {
+  color: black;
+  font-size: 70cqmax;
+}
