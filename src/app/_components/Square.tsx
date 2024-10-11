@@ -10,7 +10,6 @@ const Square = ({ row, col, isVisited, isLastMove, isLegal, onClick }) => {
       data-col={col}
     >
       {isLastMove && <div className="knight">&#9822;</div>}
-      {/* {row},{col}   Optional: Comment out if not needed  */}
     </div>
   );
 };

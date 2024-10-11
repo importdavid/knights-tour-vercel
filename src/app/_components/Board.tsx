@@ -2,23 +2,31 @@ import React, { useState } from 'react';
 import Square from './Square';
 import BoardForm from './BoardForm';
 
+type Move = [number, number]
 
 const Board = () => {
   const [rows, setRows] = useState(8); // Initial state for rows
   const [cols, setCols] = useState(8); // Initial state for columns
-  const [route, setRoute] = useState([]); // State for route (now stores coordinates)
+  // const [route, setRoute] = useState([]); // State for route (now stores coordinates)
 
-  const handleRowChange = (event) => {
+  const [move, setMove] = useState<{ row: number; column: number }>({
+    row: 0,
+    column: 0,
+  });
+
+  const [route, setRoute] = useState<Move[]>([]); // State for storing moves
+
+  const handleRowChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRows(parseInt(event.target.value)); // Update rows on input change
     setRoute([]); // Reset route to empty on form change
   };
 
-  const handleColChange = (event) => {
+  const handleColChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCols(parseInt(event.target.value)); // Update cols on input change
     setRoute([]); // Reset route to empty on form change
   };
 
-  const isLegalMove = (row, col, prevRoute) => {
+  const isLegalMove = (row: Number, col: Number, prevRoute: any) => {
     // All moves legal if no previous moves
     if (prevRoute.length === 0) { return true }
 
@@ -44,11 +52,11 @@ const Board = () => {
 
     // Check if square has already been visited
     return !prevRoute.some(
-      (prevSquare) => prevSquare[0] === row && prevSquare[1] === col
+      (prevSquare: any) => prevSquare[0] === row && prevSquare[1] === col
     );
   };
 
-  const handleSquareClick = (row, col) => {
+  const handleSquareClick = (row: any, col: any) => {
     const newRoute = [...route]; // Copy of route
 
     if (isLegalMove(row, col, route)) {
@@ -81,8 +89,7 @@ const Board = () => {
           const isVisited = route.some(
             (prevSquare) => prevSquare[0] === row && prevSquare[1] === col
           );
-          const isLastMove =
-            route.length > 0 && route[route.length - 1][0] === row && route[route.length - 1][1] === col;
+          const isLastMove = (route?.length > 0 && route[route.length - 1][0] === row && route[route.length - 1][1] === col) || false;
           const isLegal = isLegalMove(row, col, route);
 
           return (
