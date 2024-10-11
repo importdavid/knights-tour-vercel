@@ -3,9 +3,9 @@
 import Board from '../_components/Board';
 
 export default async function Home() {
-    return (
-        <div className="App min-h-screen">
-          <Board />
-        </div>
-      );
+  return (
+    <div className='app min-h-screen'>
+      <Board />
+    </div>
+  );
 }
