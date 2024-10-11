@@ -1,3 +1,5 @@
+// we may as well define these types here i think
+//
 const BoardForm = ({ rows, cols, disabled, handleBackClick, handleResetClick, onChangeRows, onChangeCols }) => {
 
   return (

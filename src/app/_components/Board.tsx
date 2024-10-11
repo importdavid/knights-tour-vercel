@@ -9,10 +9,18 @@ const Board = () => {
   const [cols, setCols] = useState(8); // Initial state for columns
   // const [route, setRoute] = useState([]); // State for route (now stores coordinates)
 
-  const [move, setMove] = useState<{ row: number; column: number }>({
+  const [currentMove, setCurrentMove] = useState<{ row: number; column: number }>({
     row: 0,
     column: 0,
   });
+
+  const handleSquareClick = (row: number, column: number) => {
+    const newRoute = [...route]; // Copy of route
+    if (isLegalMove(row, column, route)) {
+      setCurrentMove({ row, column });
+      newRoute.push([row, column]);
+    }
+  };
 
   const [route, setRoute] = useState<Move[]>([]); // State for storing moves
 
@@ -56,15 +64,6 @@ const Board = () => {
     );
   };
 
-  const handleSquareClick = (row: any, col: any) => {
-    const newRoute = [...route]; // Copy of route
-
-    if (isLegalMove(row, col, route)) {
-      newRoute.push([row, col]);
-      setRoute(newRoute);
-    }
-  };
-
   const handleBackClick = () => {
     if (route.length > 0) {
       // Update route state using spread operator and slice
@@ -89,7 +88,9 @@ const Board = () => {
           const isVisited = route.some(
             (prevSquare) => prevSquare[0] === row && prevSquare[1] === col
           );
-          const isLastMove = (route?.length > 0 && route[route.length - 1][0] === row && route[route.length - 1][1] === col) || false;
+          const isLastMove = row === currentMove.row && col === currentMove.column && route.length > 0
+
+          // const isLastMove = (route.length > 0 && route[route.length - 1][0] === row && route[route.length - 1][1] === col) || false;
           const isLegal = isLegalMove(row, col, route);
 
           return (
