@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import Square from './Square';
 import BoardForm from './BoardForm';
 
-type Move = [number, number]
+type Move = [row: number, col: number]
+type Route = Move[]
 
 const Board = () => {
   const [rows, setRows] = useState(8); // Initial state for rows
   const [cols, setCols] = useState(8); // Initial state for columns
-  // const [route, setRoute] = useState([]); // State for route (now stores coordinates)
+  const [route, setRoute] = useState<Route>([]); // State for storing moves
 
   const [currentMove, setCurrentMove] = useState<{ row: number; column: number }>({
     row: 0,
@@ -19,10 +20,9 @@ const Board = () => {
     if (isLegalMove(row, column, route)) {
       setCurrentMove({ row, column });
       newRoute.push([row, column]);
+      setRoute(newRoute)
     }
   };
-
-  const [route, setRoute] = useState<Move[]>([]); // State for storing moves
 
   const handleRowChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRows(parseInt(event.target.value)); // Update rows on input change
@@ -34,12 +34,14 @@ const Board = () => {
     setRoute([]); // Reset route to empty on form change
   };
 
-  const isLegalMove = (row: Number, col: Number, prevRoute: any) => {
+  const isLegalMove = (row: Number, col: Number, prevRoute: Route) => {
     // All moves legal if no previous moves
     if (prevRoute.length === 0) { return true }
 
+    const prevRow = currentMove.row
+    const prevCol = currentMove.column
+
     // Determine potential moves from last move of route
-    const [prevRow, prevCol] = prevRoute[prevRoute.length - 1]
     const potentialMoves = [
       [prevRow + 2, prevCol + 1],
       [prevRow + 2, prevCol - 1],
@@ -89,8 +91,6 @@ const Board = () => {
             (prevSquare) => prevSquare[0] === row && prevSquare[1] === col
           );
           const isLastMove = row === currentMove.row && col === currentMove.column && route.length > 0
-
-          // const isLastMove = (route.length > 0 && route[route.length - 1][0] === row && route[route.length - 1][1] === col) || false;
           const isLegal = isLegalMove(row, col, route);
 
           return (
