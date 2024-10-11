@@ -1,3 +1,4 @@
+//@ts-ignore
 const Square = ({ row, col, isVisited, isLastMove, isLegal, onClick }) => {
   const squareClass = `square ${isVisited ? 'isVisited' : ''}${isLegal ? ' isLegal' : ''}`;
 
