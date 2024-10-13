@@ -1,5 +1,15 @@
-//@ts-ignore
-const BoardForm = ({ rows, cols, disabled, handleBackClick, handleResetClick, onChangeRows, onChangeCols }) => {
+interface FormProps {
+  rows: number
+  cols: number
+  disabled: boolean
+  onClick: (row: number, column: number) => void
+  handleBackClick: () => void
+  handleResetClick: () => void
+  onChangeRows: () => void
+  onChangeCols: () => void
+}
+
+export default function BoardForm({ rows, cols, disabled, handleBackClick, handleResetClick, onChangeRows, onChangeCols }: FormProps) {
 
   return (
     <form className="flex text-zinc-200 text-xs md:text-sm flex-col space-y-4">
@@ -32,5 +42,3 @@ const BoardForm = ({ rows, cols, disabled, handleBackClick, handleResetClick, on
     </form >
   );
 };
-
-export default BoardForm;
