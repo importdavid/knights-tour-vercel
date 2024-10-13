@@ -2,11 +2,10 @@ interface FormProps {
   rows: number
   cols: number
   disabled: boolean
-  onClick: (row: number, column: number) => void
   handleBackClick: () => void
   handleResetClick: () => void
-  onChangeRows: () => void
-  onChangeCols: () => void
+  onChangeRows: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeCols: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function BoardForm({ rows, cols, disabled, handleBackClick, handleResetClick, onChangeRows, onChangeCols }: FormProps) {
