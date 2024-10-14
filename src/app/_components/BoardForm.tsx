@@ -17,6 +17,7 @@ export default function BoardForm({ rows, cols, disabled, handleBackClick, handl
         type="number"
         id="rows"
         value={rows}
+        onClick={(e) => e.currentTarget.select()}
         onChange={onChangeRows}
         min="1"
         className="p-2 text-black"
@@ -26,6 +27,7 @@ export default function BoardForm({ rows, cols, disabled, handleBackClick, handl
         type="number"
         id="cols"
         value={cols}
+        onClick={(e) => e.currentTarget.select()}
         onChange={onChangeCols}
         min="1"
         className="p-2 text-black"

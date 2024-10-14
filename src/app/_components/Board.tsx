@@ -17,11 +17,13 @@ export default function Board() {
   };
 
   const handleRowChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === '') { return }
     setRows(parseInt(event.target.value)); // Update rows on input change
     setRoute([]); // Reset route to empty on form change
   };
 
   const handleColChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === '') { return }
     setCols(parseInt(event.target.value)); // Update cols on input change
     setRoute([]); // Reset route to empty on form change
   };
