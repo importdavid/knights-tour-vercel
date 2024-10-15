@@ -2,7 +2,7 @@
 
 import Board from '../_components/Board';
 
-export default async function Home() {
+export default function Home() {
   return (
     <div className='app min-h-screen'>
       <Board />

@@ -1,4 +1,14 @@
-const BoardForm = ({ rows, cols, disabled, handleBackClick, handleResetClick, onChangeRows, onChangeCols }) => {
+interface FormProps {
+  rows: number
+  cols: number
+  disabled: boolean
+  handleBackClick: () => void
+  handleResetClick: () => void
+  onChangeRows: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeCols: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export default function BoardForm({ rows, cols, disabled, handleBackClick, handleResetClick, onChangeRows, onChangeCols }: FormProps) {
 
   return (
     <form className="flex text-zinc-200 text-xs md:text-sm flex-col space-y-4">
@@ -7,6 +17,7 @@ const BoardForm = ({ rows, cols, disabled, handleBackClick, handleResetClick, on
         type="number"
         id="rows"
         value={rows}
+        onClick={(e) => e.currentTarget.select()}
         onChange={onChangeRows}
         min="1"
         className="p-2 text-black"
@@ -16,6 +27,7 @@ const BoardForm = ({ rows, cols, disabled, handleBackClick, handleResetClick, on
         type="number"
         id="cols"
         value={cols}
+        onClick={(e) => e.currentTarget.select()}
         onChange={onChangeCols}
         min="1"
         className="p-2 text-black"
@@ -31,5 +43,3 @@ const BoardForm = ({ rows, cols, disabled, handleBackClick, handleResetClick, on
     </form >
   );
 };
-
-export default BoardForm;

@@ -2,63 +2,34 @@ import React, { useState } from 'react';
 import Square from './Square';
 import BoardForm from './BoardForm';
 
+type Move = { row: number, column: number }
+type Route = Move[]
 
-const Board = () => {
+export default function Board() {
   const [rows, setRows] = useState(8); // Initial state for rows
   const [cols, setCols] = useState(8); // Initial state for columns
-  const [route, setRoute] = useState([]); // State for route (now stores coordinates)
+  const [route, setRoute] = useState<Route>([]); // State for storing moves
 
-  const handleRowChange = (event) => {
+  const handleSquareClick = (row: number, column: number) => {
+    const newRoute = [...route]; // Copy of route
+    newRoute.push({ row, column });
+    setRoute(newRoute)
+  };
+
+  const handleRowChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === '') { return }
     setRows(parseInt(event.target.value)); // Update rows on input change
     setRoute([]); // Reset route to empty on form change
   };
 
-  const handleColChange = (event) => {
+  const handleColChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === '') { return }
     setCols(parseInt(event.target.value)); // Update cols on input change
     setRoute([]); // Reset route to empty on form change
   };
 
-  const isLegalMove = (row, col, prevRoute) => {
-    // All moves legal if no previous moves
-    if (prevRoute.length === 0) { return true }
-
-    // Determine potential moves from last move of route
-    const [prevRow, prevCol] = prevRoute[prevRoute.length - 1]
-    const potentialMoves = [
-      [prevRow + 2, prevCol + 1],
-      [prevRow + 2, prevCol - 1],
-      [prevRow - 2, prevCol + 1],
-      [prevRow - 2, prevCol - 1],
-      [prevRow + 1, prevCol + 2],
-      [prevRow + 1, prevCol - 2],
-      [prevRow - 1, prevCol + 2],
-      [prevRow - 1, prevCol - 2],
-    ];
-
-    // Check if new square is within knight moves
-    if (
-      !potentialMoves.some((move) => move[0] === row && move[1] === col)
-    ) {
-      return false
-    };
-
-    // Check if square has already been visited
-    return !prevRoute.some(
-      (prevSquare) => prevSquare[0] === row && prevSquare[1] === col
-    );
-  };
-
-  const handleSquareClick = (row, col) => {
-    const newRoute = [...route]; // Copy of route
-
-    if (isLegalMove(row, col, route)) {
-      newRoute.push([row, col]);
-      setRoute(newRoute);
-    }
-  };
-
   const handleBackClick = () => {
-    if (route.length > 0) {
+    if (route.length > 1) {
       // Update route state using spread operator and slice
       setRoute((prevRoute) => prevRoute.slice(0, prevRoute.length - 1));
     }
@@ -78,21 +49,13 @@ const Board = () => {
         .map((_, colIndex) => {
           const row = rows - rowIndex;
           const col = colIndex + 1;
-          const isVisited = route.some(
-            (prevSquare) => prevSquare[0] === row && prevSquare[1] === col
-          );
-          const isLastMove =
-            route.length > 0 && route[route.length - 1][0] === row && route[route.length - 1][1] === col;
-          const isLegal = isLegalMove(row, col, route);
 
           return (
             <Square
               key={`${row}-${col}`}
               row={row}
               col={col}
-              isVisited={isVisited}
-              isLastMove={isLastMove}
-              isLegal={isLegal}
+              route={route}
               onClick={handleSquareClick}
             />
           );
@@ -117,7 +80,9 @@ const Board = () => {
         <div className="h-full w-full flex flex-col items-start text-xs lg:text-xl">
           <h1>Route:</h1>
           <div>
-            {route.length > 0 ? <p>{JSON.stringify(route)}</p> : <p>Choose a starting square!</p>}
+            {route.length > 0
+              ? <p>{route.map((move, idx) => (<span key={idx}>{`(${move.row}, ${move.column}) `}</span>))}</p>
+              : <p>Choose a starting square!</p>}
           </div>
         </div>
       </div>
@@ -146,4 +111,3 @@ const Board = () => {
   );
 };
 
-export default Board;
